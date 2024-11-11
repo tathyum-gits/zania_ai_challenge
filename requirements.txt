@@ -1,0 +1,8 @@
+langchain
+langchain-community
+langchain_openai
+tiktoken
+faiss-cpu
+pdfplumber
+slack-sdk
+python-dotenv

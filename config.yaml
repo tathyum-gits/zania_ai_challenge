@@ -1,0 +1,8 @@
+pdf_path: "data/handbook.pdf"
+slack_channel: "#zania-ai-challenge"
+questions:
+  - "What is the name of the company?"
+  - "Who is the CEO of the company?"
+  - "What is their vacation policy?"
+  - "What is the termination policy?"
+  
