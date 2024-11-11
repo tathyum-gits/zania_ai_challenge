@@ -1,5 +1,5 @@
 pdf_path: "data/handbook.pdf"
-slack_channel: "#zania-ai-challenge"
+slack_channel: "#zania-assignment"
 questions:
   - "What is the name of the company?"
   - "Who is the CEO of the company?"
