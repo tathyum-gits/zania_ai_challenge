@@ -1,111 +1,115 @@
-This ai challenge project enables you to answer user questions based on context from a PDF document and post them directly to a Slack channel. 
-It leverages OpenAI's language model for question-answering and uses LangChain for a Retrieval-Augmented Generation (RAG) setup.
-It is capable of parsing PDF text, using GPT model to answer the questions based on provided pdf context, and seamlessly posting them to Slack.
 
-Project Structure:
+# Zania AI Challenge
 
+This project is an AI-powered question-answering bot designed to answer user questions based on the context extracted from a PDF document and post the responses directly to a specified Slack channel. It leverages OpenAI's language model for question-answering and utilizes LangChain for a Retrieval-Augmented Generation (RAG) setup.
+
+## Project Structure
+
+```
 zania_ai_challenge/
 ├── src/
-│   ├── pdf_parser.py
-│   ├── qa_agent.py
-│   ├── slack_client.py
-│   └── app.py
+│   ├── pdf_parser.py          # Parses PDF documents
+│   ├── qa_agent.py            # Question-answering agent using OpenAI
+│   ├── slack_client.py        # Posts messages to Slack
+│   └── app.py                 # Main application file
 ├── data/
-│   └── handbook.pdf
+│   └── handbook.pdf           # Example PDF document
 ├── log/
-│   └── logger.log
-├── config.yaml
-├── requirements.txt
-├── README.md
-└── .env
+│   └── logger.log             # Log file for recording events
+├── config.yaml                # Configuration file
+├── requirements.txt           # List of dependencies
+├── README.md                  # Project documentation
+└── .env                       # Environment variables for API keys
+```
 
-Requirements:
+## Requirements
 
-  Python 3.7+
-  An OpenAI API key (for question-answering)
-  A Slack API token (for posting messages)
+- Python 3.7+
+- OpenAI API key (for question-answering functionality)
+- Slack API token (for posting messages to a Slack channel)
 
-Setup:
+## Setup
 
-  Clone the repository:
+### 1. Clone the Repository
+```bash
+git clone https://github.com/tathyum-gits/zania_ai_challenge
+cd zania_ai_challenge
+```
 
-    git clone https://github.com/tathyum-gits/zania_ai_challenge
-    cd zania_ai_challenge
+### 2. Install Dependencies
+```bash
+pip install -r requirements.txt
+```
 
-  Install dependencies:
+### 3. Configure API Keys
+Follow the steps in the **API Key Setup** section below to configure your API keys in the `.env` file.
 
-    pip install -r requirements.txt
+### 4. Environment Variables Setup
 
-  Configure API Keys:
+Create a `.env` file and add your OpenAI and Slack API keys:
+```env
+OPENAI_API_KEY=your_openai_api_key
+SLACK_API_TOKEN=your_slack_api_token
+```
 
-	Follow the instructions in the API Key Setup section below to add your API keys to the environment.
+### 5. Configuring the `config.yaml` File
 
-  Environment Variables Setup:
+In the project root, configure the `config.yaml` file with the following options:
 
-    Populate the .env file with your OpenAI and Slack API keys.
+- `pdf_path`: Path to the PDF document to analyze.
+- `questions`: List of questions you want the bot to answer.
+- `slack_channel`: Slack channel where the bot will post answers.
 
-  Configuring the config.yaml File
-    
-    To run this code, configure the config.yaml file located in the project root. The file includes the following configuration options:
+#### Example `config.yaml`
 
-      pdf_path: The path to the PDF file you want to analyze. Place your PDF files in the data/ folder for easy access.
-      questions: A list of questions you want the bot to answer.
-      slack_channel: The Slack channel where the bot will post the answers.
-      
-      Example config.yaml
+```yaml
+pdf_path: "data/handbook.pdf"  # Path to the PDF file
+questions:
+  - "What is the name of the company?"
+  - "Who is the CEO of the company?"
+  - "What is their vacation policy?"
+  - "What is the termination policy?"
+slack_channel: "#zania-ai-challenge"  # Slack channel to post answers
+```
 
-      pdf_path: "data/handbook.pdf"  # Path to the PDF file
-      questions:
-        - "What is the name of the company?"
-        - "Who is the CEO of the company?"
-        - "What is their vacation policy?"
-        - "What is the termination policy?"
-      slack_channel: "#zania-ai-challenge"  # Slack channel to post answers
+### 6. Usage
 
-  Usage
-    
-    Add your PDF file to the data/ folder:
+1. **Add Your PDF**: Place the PDF file you want to analyze in the `data/` folder for easy organization. Ensure `pdf_path` in `config.yaml` points to this file.
 
-		Place the PDF file you want to analyze in the data/ folder for easy organization. Make sure the pdf_path in config.yaml correctly points to this file.
+2. **Edit `config.yaml`**: Update the `pdf_path`, `questions`, and `slack_channel` fields with desired values.
 
-    Edit the config.yaml File:
+3. **Run the Bot**:
+    ```bash
+    python app.py
+    ```
+   The application will read the `config.yaml` file, extract text from the PDF, answer the questions, and post answers to the specified Slack channel.
 
-      Update the pdf_path, questions, and slack_channel fields in config.yaml with the desired values.
+## API Key Setup
 
-    Run the Bot:
+To use this bot, configure your OpenAI and Slack API keys:
 
-      python app.py
-
-    The app will read the config.yaml file, extract text from the specified PDF, answer the questions, and post the answers to the specified Slack channel.
-
-  API Key Setup
+- **OpenAI API Key**: Add your OpenAI API key to `.env`:
+  ```env
+  OPENAI_API_KEY=your_openai_api_key
+  ```
   
-    To run this bot, you’ll need to configure your OpenAI and Slack API keys.
+- **Slack API Token**:
+  - **Option 1**: Set up your own Slack App.
+    - [Create a Slack app](https://api.slack.com/apps) and add the `chat:write` scope under OAuth & Permissions to allow message posting.
+    - Install the app to your Slack workspace to retrieve the OAuth token.
+    - Add the token to your `.env` file:
+      ```env
+      SLACK_API_TOKEN=your_slack_api_token
+      ```
 
-      OpenAI API Key:
+  - **Option 2**: Use Provided Test Credentials.
+    - If setting up a new Slack app isn’t feasible, you may use our test credentials to verify functionality.
+    - **Slack API Token**: `test_slack_api_key` (provided separately)
 
-        Add OpenAI API key to your .env file as follows:
+## Logging
 
-          OPENAI_API_KEY=your_openai_api_key
-      
-      Slack API Token:
+This project uses logging to record important events and errors. Logs are written to both the console and a file named `logger.log` in the `log` directory.
 
-        Option 1: Set up Your Own Slack App:
-        
-          Create a Slack app by following the instructions at Slack API page.
-          Add the chat:write scope under OAuth & Permissions to allow the bot to post messages.
-          Install the app to your Slack workspace to retrieve the OAuth token.
-          Add the token to your .env file as follows:
+## License
 
-          SLACK_API_TOKEN=your_slack_api_token
-
-        Option 2: Use Provided Test Credentials:
-        
-          If setting up a new Slack app is not feasible, you may use our test credentials to verify the bot's functionality:
-          
-          Slack API Token: test_slack_api_key (provided seperately)
-  Logging
-
-      This project uses logging to record important events and errors. Logs are written to both the console and a file named logger.log in the log directory.
-
-  
+This project is licensed under the MIT License. See the `LICENSE` file for details.
